@@ -3,7 +3,6 @@ const app = express()
 
 app.get('/', (req, res) => {
     res.send('Hello Node API')
-
 })
 
 app.listen(3000,  ()=> {
