@@ -2,8 +2,7 @@ const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
 
 const app = express();
-const PORT = 3000;
-
+const PORT = process.env.PORT || 3000;  // Use process.env.PORT for AWS deployment
 
 app.use(express.json());
 
@@ -27,7 +26,6 @@ async function start() {
 start();
 
 // Rest of your code...
-
 
 // Your routes go here...
 
@@ -64,7 +62,6 @@ app.get('/lessons/:id', async (req, res) => {
     }
 });
 
-
 app.post('/lessons', async (req, res) => {
     try {
         const result = await client.db().collection('lessons').insertOne(req.body);
@@ -75,7 +72,6 @@ app.post('/lessons', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-
 
 // Update a lesson
 app.put('/lessons/:id', async (req, res) => {
@@ -111,7 +107,4 @@ app.delete('/lessons/:id', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-    
 });
-
-
