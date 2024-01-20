@@ -26,6 +26,11 @@ async function start() {
 }
 
 start();
+// Logger middleware
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
 
 // Your routes go here...
 app.get('/', (req, res) => {
