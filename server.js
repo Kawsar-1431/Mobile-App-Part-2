@@ -7,6 +7,7 @@ const fs = require('fs'); // Include the 'fs' module
 const app = express();
 const PORT = 3000;
 let lessonCollection;
+app.use(cors());
 
 app.use(express.json());
 
@@ -132,7 +133,7 @@ app.get('/lesson-images/:filename', (req, res) => {
         res.status(404).json({ message: 'Image not found' });
     }
 });
-app.use(cors());
+
 
 // Helper function to check if a file exists
 function fileExists(filePath) {
