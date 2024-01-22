@@ -1,7 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 const { MongoClient, ObjectId } = require('mongodb');
+const path = require('path');
+const fs = require('fs'); // Include the 'fs' module
 
-const app = express();  // Declare 'app' globally
+const app = express();
 const PORT = 3000;
 let lessonCollection;
 
@@ -26,6 +29,7 @@ async function start() {
 }
 
 start();
+
 // Logger middleware
 app.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
@@ -112,3 +116,30 @@ app.delete('/lessons/:id', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+// Additional route to handle lesson images
+app.get('/lesson-images/:filename', (req, res) => {
+    const { filename } = req.params;
+    const lessonImagesDirectory = path.join(__dirname, 'lesson-images'); // Define the path
+    const imagePath = path.join(lessonImagesDirectory, filename);
+
+    // Check if the file exists
+    if (fileExists(imagePath)) {
+        // Serve the image
+        res.sendFile(imagePath);
+    } else {
+        // Return an error message if the image file does not exist
+        res.status(404).json({ message: 'Image not found' });
+    }
+});
+app.use(cors());
+
+// Helper function to check if a file exists
+function fileExists(filePath) {
+    try {
+        fs.accessSync(filePath, fs.constants.R_OK);
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
