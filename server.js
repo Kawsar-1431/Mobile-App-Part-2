@@ -144,3 +144,5 @@ function fileExists(filePath) {
         return false;
     }
 }
+
+app.use('/lesson-images', express.static(path.join(__dirname, 'lesson-images')));
