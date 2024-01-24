@@ -1,5 +1,7 @@
+// Import MongoDB ObjectId
 const { ObjectId } = require('mongodb');
 
+// Lesson schema definition
 const lessonSchema = {
     name: {
         type: String,
@@ -24,6 +26,7 @@ const lessonSchema = {
     }
 };
 
+// Export functions related to lesson operations
 module.exports = {
     createLesson: (lessonCollection, lessonData) => {
         return lessonCollection.insertOne(lessonData);
